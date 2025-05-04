@@ -2,17 +2,17 @@ import { brands } from "./constants/brands.js";
 import { swiperParams } from "./constants/swiperParams.js";
 const contentBlock = document.querySelector('.content');
 const switcherBtn = document.querySelector('.content__btn-switcher');
-const textSwitcherBtn = switcherBtn.querySelector('span')
-const slider = document.querySelector('.swiper-wrapper')
+const textSwitcherBtn = switcherBtn.querySelector('span');
+const slider = document.querySelector('.swiper-wrapper');
 
 let isActiveBtn = false;
-const brandsMediaBreakpoint = '(min-width: 768px)'
+const brandsMediaBreakpoint = '(min-width: 768px)';
 let brandsMediaQuery = window.matchMedia(brandsMediaBreakpoint);
 
 
 const handleButtonToggle = () => {
     isActiveBtn = !isActiveBtn;
-    switcherBtn.classList.toggle('active-btn')
+    switcherBtn.classList.toggle('active-btn');
     renderBrands();
 }
 
@@ -22,19 +22,19 @@ switcherBtn.addEventListener('click', () => {
 
 const getVisibleLimit = () => window.innerWidth >= 768 ? 8 : 6;
 
-const renderBrands = (breakpoint) => {
+const renderBrands = () => {
     contentBlock.innerHTML = '';
     let isVisibleBrands;
 
-    if(isActiveBtn && brandsMediaQuery){
+    if (isActiveBtn && brandsMediaQuery) {
         isVisibleBrands = brands;
-    } 
-    else{
+    }
+    else {
         isVisibleBrands = brands.slice(0, getVisibleLimit());
     }
 
     isVisibleBrands.map(el => {
-         return contentBlock.innerHTML += `
+        return contentBlock.innerHTML += `
         <li>
             <div class="content__element">
                 <img src="${el.src}" alt="${el.alt}">
@@ -44,16 +44,16 @@ const renderBrands = (breakpoint) => {
             </div>
         </li>
         `;
-    })
+    });
 
     textSwitcherBtn.textContent = isActiveBtn ? 'Скрыть' : 'Показать все';
-}
+};
 
 renderBrands(brandsMediaBreakpoint);
 
 brandsMediaQuery.addEventListener('change', () => {
     renderBrands(brandsMediaBreakpoint);
-})
+});
 
 
 const initialSwiper = (breakpoint, className, params) => {
@@ -61,17 +61,17 @@ const initialSwiper = (breakpoint, className, params) => {
     let swiper = null;
 
     const enableSwiper = () => {
-        if(!swiper) {
-            swiper = new Swiper(className, params)
+        if (!swiper) {
+            swiper = new Swiper(className, params);
         }
     }
 
     const deleteSwiper = () => {
-        if(swiper) {
-            swiper.destroy(true, true)
+        if (swiper) {
+            swiper.destroy(true, true);
             swiper = null;
         }
-    }
+    };
 
     const updateSwiper = () => {
         if (swiperMediaQuery.matches) {
@@ -79,7 +79,7 @@ const initialSwiper = (breakpoint, className, params) => {
         } else {
             deleteSwiper();
         }
-    }
+    };
 
     swiperMediaQuery.addEventListener('change', () => {
         updateSwiper();
@@ -95,7 +95,7 @@ const initialSwiper = (breakpoint, className, params) => {
                     </button>
                 </div>
             </div>`;
-   })
+    });
 
     updateSwiper();
 };
